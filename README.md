@@ -1,14 +1,17 @@
 # Fraud Transaction Detection App 🚨
 
-A full-stack machine learning application to detect fraudulent transactions using a trained ML model (Gradient Boosting). This app is built using Flask, deployed on Render, and includes a responsive web UI for live predictions.
+A full-stack machine learning web application to detect fraudulent transactions using a trained Gradient Boosting model. Built with Flask and deployed for free on Render.
+
+🔗 **Live App**: [fraud-detection-opba.onrender.com](https://fraud-detection-opba.onrender.com)
 
 ## 🔍 Features
 
-- 🧠 Real ML model (Gradient Boosting via scikit-learn)
-- 🖥️ Responsive web interface (HTML + CSS)
+- 🧠 ML model (Gradient Boosting Classifier via scikit-learn)
+- 💻 Clean web interface built with Flask + HTML + CSS
+- 📱 Mobile-responsive UI design
 - 📊 Logs all predictions to `data/prediction_logs.csv`
-- 🔁 Retrain model on demand with a single button
-- ☁️ Deployed for free using [Render](https://render.com)
+- 🔁 One-click retraining of the model via UI button
+- ☁️ Fully deployed on [Render](https://render.com)
 
 ## 📁 Project Structure
 
@@ -23,72 +26,78 @@ fraud_detection/
 │
 ├── data/                  # Raw data and prediction logs
 │   ├── transactions.csv
-│   └── prediction_logs.csv (generated during use)
+│   └── prediction_logs.csv (auto-generated)
 │
-├── models/                # Trained model
+├── models/                # Trained ML model file
 │   └── fraud_model_ml.pkl
 │
-├── notebooks/             # EDA notebook (optional)
+├── notebooks/             # Exploratory Data Analysis
 │   └── EDA.ipynb
 │
-├── src/                   # Custom training, preprocessing scripts
+├── src/                   # Custom training & utilities
 │   ├── data_preprocessing.py
 │   ├── model_training.py
 │   ├── train_ml.py
 │   └── ...
 │
-├── main.py                # Entry-point (can trigger training)
-├── wsgi.py                # For Render deployment
-├── requirements.txt       # Python dependencies
-├── Procfile               # Tells Render how to run the app
-└── .gitignore
+├── main.py                # CLI entry to train model
+├── wsgi.py                # Render entry point
+├── requirements.txt       # Python packages
+├── Procfile               # Tells Render how to start app
+└── .gitignore             # Files to ignore in Git
 ```
 
-## 🚀 Live App
-
-You can access the deployed app here: _[your Render URL]_
-
-## 🛠️ How to Run Locally
+## 🚀 Running the App Locally
 
 ```bash
-# 1. Clone the repo
+# Clone the repo
 git clone https://github.com/your-username/fraud-detection-app.git
 cd fraud-detection-app
 
-# 2. Create virtual environment and install dependencies
+# Create and activate virtual environment
 python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+.venv\Scripts\activate   # on Windows
+# or
+source .venv/bin/activate  # on Mac/Linux
+
+# Install dependencies
 pip install -r requirements.txt
 
-# 3. Train the model (if not already present)
+# (Optional) Train ML model
 python src/train_ml.py
 
-# 4. Run the app
+# Run app locally
 python main.py
 # or
 gunicorn wsgi:app
 ```
 
-## 🧪 Example Inputs
+## 🧪 Example Input
 
 | CUSTOMER_ID | TERMINAL_ID | TX_AMOUNT |
 |-------------|-------------|-----------|
 | 1234        | 9876        | 299.50    |
 | 4321        | 1234        | 49.99     |
 
-## 📊 Logs
+## 📊 Prediction Logs
 
-Every prediction made via the UI is appended to `data/prediction_logs.csv` like:
+Every prediction made through the UI is appended to:
 
+```bash
+data/prediction_logs.csv
+```
+
+Format:
 ```
 timestamp,customer_id,terminal_id,tx_amount,prediction
 2025-07-26T12:01:22,1234,9876,299.5,1
 ```
 
-## 📦 Deployment Notes
+## 💡 Future Improvements
 
-- Use `gunicorn wsgi:app` as the start command on Render
-- Make sure `models/fraud_model_ml.pkl` is committed or generated during build
+- Add confidence score (% fraud probability)
+- User authentication for admins
+- Display logged predictions in table on UI
 
 ## 📄 License
 
